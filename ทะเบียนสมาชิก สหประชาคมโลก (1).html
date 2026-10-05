@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ทะเบียนสมาชิก สหประชาคมโลก</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#f0f4f9;--cd:#ffffff;--tx:#111827;--mu:#64748b;--ln:#dbe2ef;
+  --ac:#2563eb;--ac-bg:#eff6ff;
+  --ok:#16a34a;--okb:#dcfce7;
+  --wn:#d97706;--wnb:#fef3c7;
+  --er:#dc2626;--erb:#fee2e2;
+  --shadow:0 8px 20px -4px rgba(0,0,0,0.06), 0 4px 6px -2px rgba(0,0,0,0.03);
+  --shadow-lg:0 16px 32px -8px rgba(0,0,0,0.12);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0f17;--cd:#161c28;--tx:#f1f5f9;--mu:#94a3b8;--ln:#273244;
+    --ac:#3b82f6;--ac-bg:#1e293b;
+    --ok:#4ade80;--okb:#064e3b;
+    --wn:#fbbf24;--wnb:#451a03;
+    --er:#f87171;--erb:#450a0a;
+    --shadow:0 8px 20px -4px rgba(0,0,0,0.3);
+    --shadow-lg:0 16px 32px -8px rgba(0,0,0,0.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0f17;--cd:#161c28;--tx:#f1f5f9;--mu:#94a3b8;--ln:#273244;
+  --ac:#3b82f6;--ac-bg:#1e293b;
+  --ok:#4ade80;--okb:#064e3b;
+  --wn:#fbbf24;--wnb:#451a03;
+  --er:#f87171;--erb:#450a0a;
+  --shadow:0 8px 20px -4px rgba(0,0,0,0.3);
+  --shadow-lg:0 16px 32px -8px rgba(0,0,0,0.5);
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--tx);
+  font:16px/1.6 'Noto Sans Thai',system-ui,-apple-system,sans-serif;
+  letter-spacing:-0.1px;
+}
+
+header{
+  padding:24px 20px 8px;
+  max-width:680px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+header h1{margin:0;font-size:22px;font-weight:800;letter-spacing:-0.4px}
+header p{margin:2px 0 0;color:var(--mu);font-size:13px;font-weight:500}
+
+main{max-width:680px;margin:auto;padding:12px 16px 120px}
+h2{font-size:19px;font-weight:700;margin:12px 0 6px}
+h3{margin:0 0 8px;font-size:17px;font-weight:700}
+
+.ic{
+  width:22px;
+  height:22px;
+  display:inline-block;
+  vertical-align:middle;
+  flex-shrink:0;
+}
+
+.view{animation:slideUp .3s cubic-bezier(0.16,1,0.3,1) both}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.mu{color:var(--mu);font-size:13.5px;font-weight:500}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12.5px;letter-spacing:0.3px}
+
+/* Chubby Cards */
+.it{
+  background:var(--cd);
+  border:2.5px solid var(--ln);
+  border-radius:20px;
+  padding:16px 18px;
+  margin:12px 0;
+  box-shadow:var(--shadow);
+  transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.it[onclick]{cursor:pointer}
+.it[onclick]:active{transform:scale(0.98);border-color:var(--ac)}
+
+.r{display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+/* Chubby Form Controls */
+.bar{display:flex;gap:10px;margin:12px 0;align-items:center;flex-wrap:wrap}
+.bar>input,.bar>select{flex:1;min-width:0}
+
+input,select,textarea,button{font:inherit;color:inherit}
+input,select,textarea{
+  width:100%;
+  background:var(--cd);
+  border:2.5px solid var(--ln);
+  border-radius:14px;
+  padding:12px 16px;
+  outline:none;
+  font-weight:500;
+  transition:border-color .18s, box-shadow .18s;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--ac);
+  box-shadow:0 0 0 4px color-mix(in srgb, var(--ac) 25%, transparent);
+}
+input[type=checkbox]{
+  width:22px;
+  height:22px;
+  accent-color:var(--ac);
+  border-radius:6px;
+  cursor:pointer;
+}
+
+/* Chubby Buttons */
+button{
+  background:var(--cd);
+  border:2.5px solid var(--ln);
+  border-radius:14px;
+  padding:12px 18px;
+  font-weight:700;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.04);
+  transition:transform .12s ease, opacity .15s ease, background-color .18s ease;
+}
+button:active{transform:scale(0.95)}
+button:disabled{opacity:.4;pointer-events:none}
+button.pri{
+  background:var(--ac);
+  border-color:var(--ac);
+  color:#ffffff;
+  box-shadow:0 6px 16px color-mix(in srgb, var(--ac) 40%, transparent);
+}
+button.dg{
+  color:var(--er);
+  border-color:var(--er);
+  background:var(--erb);
+}
+button.x{
+  padding:6px;
+  border:0;
+  background:transparent;
+  color:var(--mu);
+  box-shadow:none;
+  border-radius:10px;
+}
+button.x:hover{background:var(--ln)}
+
+/* Badges & Tags */
+.tag{
+  font-size:12.5px;
+  font-weight:700;
+  padding:4px 12px;
+  border-radius:99px;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+}
+.tag.ok{background:var(--okb);color:var(--ok)}
+.tag.wn{background:var(--wnb);color:var(--wn)}
+
+.fld{
+  display:block;
+  margin:10px 0;
+  padding:8px 12px;
+  border-radius:14px;
+  border:2.5px solid transparent;
+}
+.fld>span{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  font-weight:700;
+  color:var(--mu);
+  margin-bottom:6px;
+}
+.fld em{font-style:normal;font-weight:600}
+.fld.ok{background:var(--okb);border-color:color-mix(in srgb, var(--ok) 30%, transparent)}
+.fld.chk{background:var(--wnb);border-color:color-mix(in srgb, var(--wn) 30%, transparent)}
+.fld.miss{background:var(--erb);border-color:color-mix(in srgb, var(--er) 30%, transparent)}
+.fld.ed{background:var(--okb);border-color:color-mix(in srgb, var(--ok) 30%, transparent)}
+
+.fld.ok em,.fld.ed em{color:var(--ok)}
+.fld.chk em{color:var(--wn)}
+.fld.miss em{color:var(--er)}
+
+.warn{
+  background:var(--wnb);
+  color:var(--wn);
+  border-radius:16px;
+  padding:14px 16px;
+  margin:14px 0;
+  font-weight:700;
+  border:2px solid color-mix(in srgb, var(--wn) 30%, transparent);
+}
+
+.ck{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin:12px 0;
+  font-weight:600;
+  cursor:pointer;
+  user-select:none;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:14px 0;
+}
+.stats div{
+  background:var(--cd);
+  border:2.5px solid var(--ln);
+  border-radius:18px;
+  padding:12px 8px;
+  text-align:center;
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--mu);
+  box-shadow:var(--shadow);
+}
+.stats b{display:block;font-size:24px;font-weight:800;color:var(--tx);margin-top:2px}
+
+/* Chubby Navigation Bar */
+.nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:var(--cd);
+  border-top:2.5px solid var(--ln);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));
+  z-index:10;
+  box-shadow:0 -8px 24px rgba(0,0,0,0.05);
+}
+.nav button{
+  border:0;
+  border-radius:14px;
+  background:none;
+  font-size:11px;
+  font-weight:700;
+  padding:8px 4px;
+  color:var(--mu);
+  box-shadow:none;
+  flex-direction:column;
+  gap:3px;
+}
+.nav button.on{
+  color:var(--ac);
+  background:var(--ac-bg);
+}
+.nav .ic{width:24px;height:24px}
+
+/* Overlay & Modals */
+.ov{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(4px);
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:20;
+  animation:fade .2s ease;
+}
+.sheet{
+  background:var(--bg);
+  width:100%;
+  max-width:680px;
+  max-height:92vh;
+  overflow:auto;
+  border-radius:28px 28px 0 0;
+  padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));
+  box-shadow:var(--shadow-lg);
+  animation:sl .28s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes fade{from{opacity:0}}
+@keyframes sl{from{transform:translateY(80px);opacity:0}}
+
+/* Flash Cards */
+.fc{
+  background:var(--cd);
+  border:3px solid var(--ln);
+  border-radius:24px;
+  padding:22px;
+  margin:16px 0;
+  touch-action:pan-y;
+  user-select:none;
+  box-shadow:var(--shadow-lg);
+  animation:pop .3s ease;
+}
+.fc[data-d=r]{border-color:var(--ok);background:var(--okb)}
+.fc[data-d=l]{border-color:var(--er);background:var(--erb)}
+@keyframes pop{from{transform:scale(0.94);opacity:0}}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  margin:8px 8px 0 0;
+  padding:6px 14px;
+  border-radius:99px;
+  background:var(--wnb);
+  color:var(--wn);
+  font-weight:700;
+  font-size:13px;
+  border:1.5px solid color-mix(in srgb, var(--wn) 30%, transparent);
+  cursor:pointer;
+}
+
+.empty{text-align:center;padding:48px 16px;color:var(--mu);font-weight:600}
+
+#t{
+  position:fixed;
+  left:50%;
+  bottom:calc(92px + env(safe-area-inset-bottom,0px));
+  transform:translate(-50%,20px);
+  background:#1e293b;
+  color:#ffffff;
+  padding:10px 20px;
+  border-radius:99px;
+  font-weight:700;
+  font-size:14px;
+  opacity:0;
+  transition:.25s cubic-bezier(0.16,1,0.3,1);
+  z-index:30;
+  pointer-events:none;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+#t.on{opacity:1;transform:translate(-50%,0)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>ทะเบียนสมาชิก สหประชาคมโลก</h1>
+    <p>ข้อมูลทั้งหมดบันทึกในเครื่องนี้อย่างปลอดภัย</p>
+  </div>
+</header>
+
+<main id="app"></main>
+<nav class="nav" id="nav"></nav>
+<div id="t"></div>
+
+<script>
+const KEY='unreg.v1', ORG='สหประชาคมโลก', FMT='Organization Member Registry Text Backup';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* 100% Vector SVG Icons Store */
+const SVG = {
+  members: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  paste: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>`,
+  flash: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  builder: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="4"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>`,
+  data: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5c0 1.66 4 3 9 3s9-1.34 9-3"/><path d="M21 5v14c0 1.66-4 3-9 3s-9-1.34-9-3V5"/><path d="M21 8.5c0 1.66-4 3-9 3s-9-1.34-9-3"/></svg>`,
+  plus: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>`,
+  close: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>`,
+  check: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  share: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>`,
+  copy: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`,
+  download: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>`,
+  trash: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`
+};
+
+/* Default Form Schema including Username */
+const defForm=()=>({
+  id:'f1',
+  title:'แบบคำขอสมัครสมาชิก',
+  fields:[
+    {key:'countryName',label:'ชื่อประเทศ',syn:['ชื่อประเทศ','country name']},
+    {key:'countryCode',label:'รหัสประเทศ',syn:['รหัสประเทศ','country code']},
+    {key:'username',label:'Discord Username',syn:['discord username','username','ผู้ใช้ discord','ชื่อ discord']},
+    {key:'discord',label:'Discord ID',syn:['discord id','discord']},
+    {key:'signer',label:'การลงนาม',syn:['การลงนาม','ลงนาม','signature']}
+  ]
+});
+
+let S={members:[],forms:[defForm()],learn:{labels:{},pairs:{},n:0},activeForm:'f1'};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('บันทึกลงเครื่องไม่สำเร็จ')}};
+const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const curForm=()=>S.forms.find(f=>f.id===S.activeForm)||S.forms[0];
+const allFields=()=>{const m=new Map();S.forms.forEach(f=>f.fields.forEach(x=>m.has(x.key)||m.set(x.key,x)));return[...m.values()]};
+
+function toast(s){const t=$('#t');t.textContent=s;t.className='on';clearTimeout(toast.h);toast.h=setTimeout(()=>t.className='',2200)}
+function arm(b,fn){if(b.dataset.a)return fn();b.dataset.a=1;const t=b.innerHTML;b.textContent='กดอีกครั้งเพื่อยืนยัน';setTimeout(()=>{b.dataset.a='';b.innerHTML=t},3000)}
+
+const AL='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const rnd=n=>[...crypto.getRandomValues(new Uint8Array(n))].map(x=>AL[x%36]).join('');
+function uniq(p,k){let v;do v=p+rnd(8);while(S.members.some(m=>m[k]===v));return v}
+function fixUnique(){
+  const seen=new Set();
+  S.members.forEach(m=>{
+    for(const[k,p]of[['memberNo','MBR-'],['cardNo','CARD-']]){
+      if(!m[k]||seen.has(m[k])){
+        let v;do v=p+rnd(8);while(seen.has(v)||S.members.some(x=>x[k]===v));
+        m[k]=v;
+      }
+      seen.add(m[k]);
+    }
+  });
+}
+
+const blank=()=>({
+  id:'',memberNo:uniq('MBR-','memberNo'),cardNo:uniq('CARD-','cardNo'),
+  countryName:'',countryCode:'',username:'',organizationMember:[ORG],
+  dataVerifiedDate:'',issuedDate:today(),missingUser:false,nonCountry:false
+});
+
+function learnPairs(){S.members.forEach(m=>{if(m.countryName&&m.countryCode)S.learn.pairs[m.countryCode]=m.countryName})}
+
+const exportObj=()=>({format:FMT,version:1,exportedAt:new Date().toISOString(),members:S.members,forms:S.forms,learn:S.learn});
+function importData(txt){
+  let o;try{o=JSON.parse(txt)}catch(e){toast('อ่าน JSON ไม่ได้ ตรวจสอบรูปแบบอีกครั้ง');return 0}
+  const arr=Array.isArray(o)?o:o.members;if(!Array.isArray(arr)){toast('ไม่พบรายการสมาชิกในข้อมูลนี้');return 0}
+  let a=0,u=0;
+  arr.forEach(r=>{
+    if(!r||typeof r!=='object')return;
+    const n={id:'',memberNo:'',cardNo:'',countryName:'',countryCode:'',username:'',organizationMember:[ORG],dataVerifiedDate:'',issuedDate:today(),missingUser:false,nonCountry:false,...r};
+    n.id=String(n.id||'');n.countryName=String(n.countryName||'').trim();n.countryCode=String(n.countryCode||'').trim();n.username=String(n.username||'').trim();
+    const ex=S.members.find(m=>(n.id&&m.id===n.id)||(n.username&&m.username===n.username)||(n.memberNo&&m.memberNo===n.memberNo&&(!n.id||!m.id)));
+    if(ex){Object.entries(n).forEach(([k,v])=>{if(v!==''&&v!=null)ex[k]=v});u++}else{S.members.push(n);a++}
+  });
+  fixUnique();
+  if(o.forms)o.forms.forEach(f=>{if(f&&f.id&&Array.isArray(f.fields)){const i=S.forms.findIndex(x=>x.id===f.id);i<0?S.forms.push(f):S.forms[i]=f}});
+  if(o.learn){Object.entries(o.learn.labels||{}).forEach(([k,v])=>S.learn.labels[k]=[...new Set([...(S.learn.labels[k]||[]),...v])]);Object.assign(S.learn.pairs,o.learn.pairs||{})}
+  learnPairs();save();toast(`นำเข้าแล้ว: เพิ่ม ${a} · อัปเดต ${u}`);return 1;
+}
+
+const impFile=i=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{importData(r.result)&&go('m')};r.readAsText(f)};
+const dataText=()=>JSON.stringify(exportObj(),null,2);
+
+function copyData(){
+  const t=dataText();
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('คัดลอกข้อมูลแล้ว'),()=>{
+    const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();
+    try{document.execCommand('copy');toast('คัดลอกข้อมูลแล้ว')}catch(e){toast('คัดลอกไม่สำเร็จ')}
+    a.remove();
+  });
+}
+function dl(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([dataText()],{type:'application/json'}));a.download='member-registry-'+today()+'.json';a.click()}
+async function shareData(){const f=new File([dataText()],'member-registry.json',{type:'application/json'});try{if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'ทะเบียนสมาชิก '+ORG});else if(navigator.share)await navigator.share({title:'ทะเบียนสมาชิก '+ORG,text:dataText()});else copyData()}catch(e){if(e.name!=='AbortError')copyData()}}
+function clearAll(){S={members:[],forms:[defForm()],learn:{labels:{},pairs:{},n:0},activeForm:'f1'};save();toast('ล้างข้อมูลเรียบร้อย');render()}
+
+const strip=l=>l.replace(/^[\s\-•]*[\d๐-๙]+[.)]\s*/,'');
+const syns=f=>[...(f.syn||[]),...(S.learn.labels[f.key]||[])].map(x=>x.toLowerCase());
+function labelOf(line,F){const t=strip(line).toLowerCase();let b=null;F.forEach(f=>syns(f).forEach(s=>{if(s&&t.startsWith(s)&&(!b||s.length>b.len))b={f,len:s.length}}));return b}
+const cleanCode=s=>s.replace(/anj/ig,'').replace(/[^0-9A-Za-z,]+/g,' ').replace(/\s*,\s*/g,', ').replace(/\s+/g,' ').trim();
+
+function parse(src,fm){
+  const F=fm.fields,v={},st={},has=k=>F.some(f=>f.key===k);
+  const L=src.split(/\r?\n/).map(x=>x.trim()).filter(x=>x&&!/^-#/.test(x)&&x!==ORG&&!/^แบบคำขอ/.test(x)&&x!=='ข้อมูลสำคัญ');
+  const lab=L.map(l=>labelOf(l,F));
+
+  L.forEach((l,i)=>{
+    const b=lab[i];if(!b||st[b.f.key])return;
+    let t=strip(l).slice(b.len).trim(),val='';const pm=t.match(/^\(([^)]*)\)/);
+    if(pm){t=t.slice(pm[0].length);if(b.f.key==='countryCode'&&/\d/.test(pm[1]))val=pm[1]}
+    t=t.replace(/^[\s*:：|\-]+/,'').replace(/\s*\*+$/,'').trim();if(!val)val=t;
+    if(!val&&i+1<L.length&&!lab[i+1])val=L[i+1].replace(/^[\-•]\s*/,'').trim();
+    if(val){v[b.f.key]=val;st[b.f.key]='ok'}
+  });
+
+  if(has('countryCode')){
+    if(v.countryCode)v.countryCode=cleanCode(v.countryCode);
+    else{const m=src.match(/ANJ\s*[-_]?\s*(\d{3}[\dA-Za-z, ]*)/i);if(m){v.countryCode=cleanCode(m[1]);st.countryCode='chk'}}
+  }
+  
+  // Extract Discord ID
+  if(has('discord')&&!v.discord){
+    const m=src.match(/<@!?(\d{15,20})>/)||src.match(/\b(\d{17,20})\b/);
+    if(m){v.discord=m[1];st.discord='chk'}
+  }
+  
+  // Extract Username if omitted or in text
+  if(has('username')&&!v.username){
+    const um=src.match(/@([a-zA-Z0-9_.\-]{2,32})/)||src.match(/username\s*[:：]\s*([^\s\n]+)/i);
+    if(um){v.username=um[1];st.username='chk'}
+  }
+
+  const P=S.learn.pairs;
+  if(has('countryName')&&has('countryCode')){
+    if(v.countryCode&&!v.countryName&&P[v.countryCode]){v.countryName=P[v.countryCode];st.countryName='chk'}
+    else if(v.countryName&&!v.countryCode){const c=Object.keys(P).find(k=>P[k]===v.countryName);if(c){v.countryCode=c;st.countryCode='chk'}}
+  }
+  
+  F.forEach(f=>{if(!v[f.key]){v[f.key]='';st[f.key]='miss'}});
+  return{vals:v,st,src}
+}
+
+function learnFrom(d,fm){
+  const L=d.src.split(/\r?\n/).map(x=>x.trim());
+  fm.fields.forEach(f=>{
+    const val=(d.vals[f.key]||'').trim();if(!val)return;
+    const nd=val.split(/\s+/)[0].replace(/^<@!?/,'');
+    const i=L.findIndex(l=>l&&!/^-#/.test(l)&&l.includes(nd));if(i<0)return;
+    for(let j=i;j>=Math.max(0,i-3);j--){
+      if(/\*\s*$|^[\s\-]*[\d๐-๙]+[.)]/.test(L[j])||j===i&&/\*/.test(L[j])){
+        const stem=strip(L[j]).split(/[(*|]/)[0].trim().toLowerCase();
+        if(stem.length>1&&stem.length<40&&!labelOf(stem+' ',fm.fields)){(S.learn.labels[f.key]=S.learn.labels[f.key]||[]).push(stem)}
+        break;
+      }
+    }
+  });
+  S.learn.n++;
+}
+
+function commit(d,fm){
+  const v=d.vals;
+  const dis=(v.discord||'').trim();
+  const idv=(dis.match(/\d{15,20}/)||[v.id||''])[0];
+  const un=(v.username||'').trim();
+  
+  let m=S.members.find(x=>(idv&&x.id===idv)||(un&&x.username===un)||(v.countryCode&&v.countryName&&x.countryCode===v.countryCode&&x.countryName===v.countryName));
+  const isNew=!m;
+  if(isNew){m=blank();S.members.push(m)}
+  
+  Object.entries(v).forEach(([k,x])=>{
+    x=(x||'').trim();
+    if(x&&k!=='discord'&&k!=='id'&&k!=='username')m[k]=x;
+  });
+  
+  if(idv)m.id=idv;
+  if(un)m.username=un;
+  m.dataVerifiedDate=today(); // Automatically date stamped on verification
+  return isNew;
+}
+
+function confirmDrafts(){
+  let a=0,u=0;
+  PS.drafts.forEach(d=>{learnFrom(d,PS.fm);commit(d,PS.fm)?a++:u++});
+  learnPairs();save();PS={text:'',drafts:[],ck:false};
+  toast(`บันทึกแล้ว: เพิ่ม ${a} · อัปเดต ${u}`);go('m');
+}
+
+let tab='m', Q='', PS={text:'',drafts:[],ck:false}, FL={k:'countryName',skip:new Set()};
+const V={m:vM,p:vP,f:vF,b:vB,d:vD};
+const NAV=[
+  ['m',SVG.members,'สมาชิก'],
+  ['p',SVG.paste,'วางฟอร์ม'],
+  ['f',SVG.flash,'กรอกเร็ว'],
+  ['b',SVG.builder,'แบบฟอร์ม'],
+  ['d',SVG.data,'ข้อมูล']
+];
+
+function render(){
+  $('#app').innerHTML=`<div class="view">${V[tab]()}</div>`;
+  $('#nav').innerHTML=NAV.map(n=>`<button class="${n[0]===tab?'on':''}" onclick="go('${n[0]}')">${n[1]}<span>${n[2]}</span></button>`).join('');
+  if(tab==='f')bindSwipe();
+}
+
+function go(t){tab=t;render();scrollTo(0,0)}
+
+/* ALWAYS KEEP VERIFIED DATA ON TOP */
+function listHTML(){
+  const q=Q.toLowerCase();
+  let L=S.members.filter(m=>!q||[m.countryName,m.countryCode,m.username,m.id,m.memberNo,m.cardNo,m.signer].join(' ').toLowerCase().includes(q));
+  
+  // Sorting: Verified on top always, then sorted by latest verification date
+  L.sort((a,b)=>{
+    const aV=Boolean(a.dataVerifiedDate);
+    const bV=Boolean(b.dataVerifiedDate);
+    if(aV&&!bV) return -1;
+    if(!aV&&bV) return 1;
+    if(aV&&bV) return b.dataVerifiedDate.localeCompare(a.dataVerifiedDate);
+    return 0;
+  });
+
+  return `<div class="mu" style="margin:4px 2px 10px">${L.length}/${S.members.length} รายการ (เรียกร้องข้อมูลตรวจแล้วขึ้นก่อน)</div>`+
+  (L.map(m=>`
+    <div class="it" onclick="edit('${m.memberNo}')">
+      <div class="r">
+        <b style="font-size:17px">${esc(m.countryName)||'<span class="mu">ยังไม่ระบุชื่อประเทศ</span>'}</b>
+        <span class="tag ${m.dataVerifiedDate?'ok':'wn'}">
+          ${m.dataVerifiedDate?SVG.check+m.dataVerifiedDate:'รอตรวจ'}
+        </span>
+      </div>
+      <div class="mu" style="margin-top:4px">
+        รหัส: <b>${esc(m.countryCode)||'–'}</b> · User: <b>${esc(m.username)||'–'}</b> · ID: <b>${esc(m.id)||'–'}</b>
+      </div>
+      <div class="mu mono" style="margin-top:6px;opacity:.8">${esc(m.memberNo)} · ${esc(m.cardNo)}</div>
+    </div>
+  `).join('')||'<div class="empty">ยังไม่มีข้อมูลสมาชิก<br>กด ＋ หรือไปที่ “วางฟอร์ม” เพื่อเริ่มต้น</div>');
+}
+
+function vM(){
+  return `<div class="bar">
+    <input placeholder="ค้นหา ชื่อ / รหัส / Discord / เลขสมาชิก" value="${esc(Q)}" oninput="Q=this.value;$('#ls').innerHTML=listHTML()">
+    <button class="pri" onclick="edit()">${SVG.plus} เพิ่ม</button>
+  </div>
+  <div id="ls">${listHTML()}</div>`;
+}
+
+function edit(no){
+  const m=S.members.find(x=>x.memberNo===no)||null, x=m||{}, fs=allFields().filter(f=>f.key!=='discord'&&f.key!=='username');
+  const inp=(k,l,val)=>`<label class="fld" style="background:var(--cd);border-color:var(--ln)"><span>${esc(l)}</span><input id="e_${k}" value="${esc(val??(x[k]||''))}"></label>`;
+  
+  document.body.insertAdjacentHTML('beforeend',`
+  <div class="ov" onclick="if(event.target===this)this.remove()">
+    <div class="sheet">
+      <div class="r" style="margin-bottom:12px">
+        <h3>${m?'แก้ไขสมาชิก':'เพิ่มสมาชิกใหม่'}</h3>
+        <button class="x" onclick="this.closest('.ov').remove()">${SVG.close}</button>
+      </div>
+      ${m?`<div class="mu mono" style="margin-bottom:12px">${esc(m.memberNo)} · ${esc(m.cardNo)}</div>`:'<div class="mu" style="margin-bottom:12px">ระบบจะออกรหัสสมาชิกและรหัสบัตรให้โดยอัตโนมัติ</div>'}
+      
+      ${fs.map(f=>inp(f.key,f.label)).join('')}
+      ${inp('username','Discord Username (เช่น john_doe)',x.username)}
+      ${inp('id','Discord ID (ตัวเลข 18 หลัก)',x.id)}
+      
+      <div style="background:var(--cd);padding:12px 14px;border-radius:16px;border:2.5px solid var(--ln);margin:14px 0">
+        <label class="ck">
+          <input type="checkbox" id="e_vf" ${x.dataVerifiedDate?'checked':''}>
+          <span>ตรวจสอบข้อมูลเรียบร้อยแล้ว</span>
+        </label>
+        <div class="mu" style="margin-left:32px">
+          ${x.dataVerifiedDate?`วันที่ตรวจล่าสุด: <b>${x.dataVerifiedDate}</b>`:'กดบันทึกพร้อมติ๊กช่องนี้เพื่อลงวันที่ตรวจวันนี้'}
+        </div>
+      </div>
+      
+      <label class="ck"><input type="checkbox" id="e_mu" ${x.missingUser?'checked':''}> ไม่พบผู้ใช้งานใน Discord (missingUser)</label>
+      <label class="ck"><input type="checkbox" id="e_nc" ${x.nonCountry?'checked':''}> ไม่ใช่ประเภทประเทศ (nonCountry)</label>
+      
+      <div class="bar" style="margin-top:18px">
+        <button class="pri" style="flex:2" onclick="saveEdit('${no||''}')">${SVG.check} บันทึกข้อมูล</button>
+        ${m?`<button class="dg" style="flex:1" onclick="arm(this,()=>delM('${no}'))">${SVG.trash} ลบ</button>`:''}
+        <button style="flex:1" onclick="this.closest('.ov').remove()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>`);
+}
+
+function saveEdit(no){
+  let m=S.members.find(x=>x.memberNo===no);
+  if(!m){m=blank();S.members.push(m)}
+  
+  [...allFields().filter(f=>f.key!=='discord'&&f.key!=='username').map(f=>f.key),'username','id'].forEach(k=>{
+    m[k]=$('#e_'+k).value.trim();
+  });
+  
+  m.missingUser=$('#e_mu').checked;
+  m.nonCountry=$('#e_nc').checked;
+  
+  /* Verification date counting exact moment checked & saved */
+  const isChecked=$('#e_vf').checked;
+  if(isChecked){
+    if(!m.dataVerifiedDate || m.dataVerifiedDate !== today()){
+      m.dataVerifiedDate = today(); // Set to current save date
+    }
+  }else{
+    m.dataVerifiedDate = '';
+  }
+  
+  learnPairs();save();$('.ov').remove();render();
+  toast('บันทึกข้อมูลเรียบร้อย');
+}
+
+function delM(no){S.members=S.members.filter(x=>x.memberNo!==no);save();$('.ov').remove();render();toast('ลบรายการเรียบร้อย')}
+
+const SL={ok:'✓ สมบูรณ์',chk:'โปรดตรวจสอบ',miss:'กรอกเอง',ed:'แก้ไขแล้ว'};
+
+function vP(){
+  const fm=curForm();
+  return `<h2>วางแบบฟอร์มคำขอ</h2>
+  <div class="mu">วางข้อความที่ก๊อปปี้จากฟอร์มสมัครหรือ JSON เพื่อนำเข้า ระบบจะสกัด Discord Username, ID และชื่อประเทศให้โดยอัตโนมัติ</div>
+  
+  <div class="bar">
+    <select onchange="S.activeForm=this.value;save()">${S.forms.map(f=>`<option value="${f.id}" ${f===fm?'selected':''}>${esc(f.title)}</option>`).join('')}</select>
+  </div>
+  
+  <textarea rows="8" placeholder="วางข้อความแบบฟอร์มที่นี่..." oninput="PS.text=this.value">${esc(PS.text)}</textarea>
+  
+  <div class="bar">
+    <button class="pri" onclick="analyze()">${SVG.paste} อ่านและประมวลผลข้อมูล</button>
+    <button onclick="PS={text:'',drafts:[],ck:false};render()">ล้างกล่องข้อความ</button>
+  </div>
+  ${draftsHTML()}`;
+}
+
+function draftsHTML(){
+  if(!PS.drafts.length)return'';
+  return `<div class="warn">⚠️️ โปรดตรวจสอบข้อมูลก่อนกดยืนยัน — ช่องสีเขียวคืออ่านได้สมบูรณ์ ช่องเหลือง/แดงสามารถพิมพ์แก้ไขได้เลย</div>`+
+  PS.drafts.map((d,i)=>`
+    <div class="it">
+      <div class="r" style="margin-bottom:8px">
+        <b style="font-size:16px">ใบสมัครที่ ${i+1}</b>
+        <button class="x" onclick="PS.drafts.splice(${i},1);render()">${SVG.close}</button>
+      </div>
+      ${PS.fm.fields.map(f=>`
+        <label class="fld ${d.st[f.key]||'miss'}">
+          <span>${esc(f.label)} <em>${SL[d.st[f.key]]||'กรอกเอง'}</em></span>
+          <input value="${esc(d.vals[f.key]||'')}" oninput="dv(${i},'${f.key}',this)">
+        </label>
+      `).join('')}
+    </div>
+  `).join('')+
+  `<label class="ck" style="margin:16px 4px">
+    <input type="checkbox" ${PS.ck?'checked':''} onchange="PS.ck=this.checked;$('#cf').disabled=!this.checked">
+    <span>ฉันได้ตรวจสอบความถูกต้องของข้อมูลทั้งหมดแล้ว</span>
+  </label>
+  <button id="cf" class="pri" style="width:100%;padding:14px" ${PS.ck?'':'disabled'} onclick="confirmDrafts()">
+    ${SVG.check} บันทึกและอนุมัติ ${PS.drafts.length} รายการ
+  </button>`;
+}
+
+function dv(i,k,el){
+  const d=PS.drafts[i];
+  d.vals[k]=el.value;
+  d.st[k]=el.value.trim()?'ed':'miss';
+  el.parentNode.className='fld '+d.st[k];
+  el.parentNode.querySelector('em').textContent=SL[d.st[k]];
+}
+
+function analyze(){
+  const t=PS.text.trim();if(!t)return toast('โปรดวางข้อความก่อนกดอ่านข้อมูล');
+  if(/^[\[{]/.test(t)){if(importData(t)){PS.text='';go('m')}return}
+  PS.fm=curForm();PS.ck=false;
+  PS.drafts=t.split(/(?=^[ \t]*สหประชาคมโลก[ \t]*$)/m).filter(p=>p.trim()).map(p=>parse(p,PS.fm)).filter(d=>Object.values(d.st).some(s=>s!=='miss'));
+  if(!PS.drafts.length){PS.drafts=[parse('',PS.fm)];toast('ไม่พบรูปแบบอัตโนมัติ สามารถกรอกเองได้')}
+  render();
+}
+
+const gv=(m,k)=>k==='discord'?(m.id||''):k==='username'?(m.username||''):(m[k]||'');
+const sv=(m,k,v)=>{
+  v=v.trim();
+  if(k==='discord')m.id=v;
+  else if(k==='username')m.username=v;
+  else m[k]=v;
+};
+const flashQ=()=>S.members.filter(m=>!gv(m,FL.k)&&!FL.skip.has(m.memberNo));
+
+function vF(){
+  const fs=allFields();
+  if(!fs.some(f=>f.key===FL.k))FL.k=fs[0]?.key;
+  const f=fs.find(x=>x.key===FL.k),q=flashQ(),m=q[0];
+  if(!f)return'<div class="empty">ยังไม่มีหัวข้อข้อมูล สามารถสร้างได้ที่แท็บ “แบบฟอร์ม”</div>';
+  
+  const P=S.learn.pairs;let sug='';
+  if(m){
+    if(FL.k==='countryName'&&P[m.countryCode])sug=P[m.countryCode];
+    if(FL.k==='countryCode'&&m.countryName)sug=Object.keys(P).find(k=>P[k]===m.countryName)||'';
+  }
+  const ctx=m?[m.username||m.id,m.countryCode&&'รหัส '+m.countryCode,m.countryName].filter(Boolean).join(' · '):'';
+  
+  return `<h2>กรอกข้อมูลรวดเร็ว</h2>
+  <div class="mu">เลือกช่องที่ต้องการเติม ระบบจะแสดงเฉพาะสมาชิกที่ยังขาดข้อมูลนั้นทีละคน</div>
+  <div class="bar">
+    <select onchange="FL.k=this.value;FL.skip.clear();render()">${fs.map(x=>`<option value="${x.key}" ${x.key===FL.k?'selected':''}>${esc(x.label)}</option>`).join('')}</select>
+  </div>
+  <div class="mu">คงเหลือ ${q.length} รายการที่ยังไม่ได้กรอก ${esc(f.label)}</div>`+
+  (m?`
+    <div class="fc" id="fc">
+      <div class="mu mono">${esc(m.memberNo)}</div>
+      <h3 style="margin-top:6px;font-size:20px">${esc(ctx)||'สมาชิกใหม่'}</h3>
+      <label class="fld" style="background:var(--cd);border-color:var(--ln)">
+        <span>${esc(f.label)}</span>
+        <input id="fv" placeholder="พิมพ์ ${esc(f.label)} ที่นี่..." onkeydown="if(event.key==='Enter')fsave()">
+      </label>
+      ${sug?`<span class="chip" data-v="${esc(sug)}" onclick="$('#fv').value=this.dataset.v">แนะนำ: ${esc(sug)}</span>`:''}
+    </div>
+    <div class="bar">
+      <button style="flex:1;padding:14px" onclick="fskip()">ข้ามไปก่อน</button>
+      <button class="pri" style="flex:1;padding:14px" onclick="fsave()">${SVG.check} บันทึกข้อมูล</button>
+    </div>
+    <div class="mu" style="text-align:center;margin-top:8px">หรือปัดการ์ดไปทางขวาเพื่อบันทึก / ปัดซ้ายเพื่อข้าม</div>
+  `:'<div class="empty">🎉 กรอกข้อมูลหัวข้อนี้ครบทุกคนเรียบร้อยแล้ว!</div>');
+}
+
+function bindSwipe(){
+  const c=$('#fc');if(!c)return;let x0=null,dx=0;
+  c.addEventListener('pointerdown',e=>{if(e.target.closest('input,button'))return;x0=e.clientX;dx=0;c.setPointerCapture(e.pointerId);c.style.transition='none'});
+  c.addEventListener('pointermove',e=>{if(x0===null)return;dx=e.clientX-x0;c.style.transform=`translateX(${dx}px) rotate(${dx/25}deg)`;c.dataset.d=dx>40?'r':dx<-40?'l':''});
+  const end=()=>{if(x0===null)return;x0=null;c.style.transition='transform .25s';if(dx>90)fsave();else if(dx<-90)fskip();else{c.style.transform='';c.dataset.d=''}};
+  c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);
+}
+function fly(c,d){c.style.transition='transform .25s,opacity .25s';c.style.transform=`translateX(${d*120}%) rotate(${d*12}deg)`;c.style.opacity=0;setTimeout(render,230)}
+function fsave(){const m=flashQ()[0],i=$('#fv'),c=$('#fc');if(!m)return;if(!i.value.trim()){c.style.transform='';c.dataset.d='';return toast('โปรดพิมพ์ข้อมูลก่อน หรือกดข้าม')}sv(m,FL.k,i.value);m.dataVerifiedDate=today();learnPairs();S.learn.n++;save();fly(c,1)}
+function fskip(){const m=flashQ()[0];if(!m)return;FL.skip.add(m.memberNo);fly($('#fc'),-1)}
+
+function vB(){
+  const f=curForm();
+  return `<h2>ตั้งค่าแบบฟอร์มคำขอ</h2>
+  <div class="mu">กำหนดช่องข้อมูลและคำค้นเพื่อให้อ่านแบบฟอร์มคำขอได้อย่างแม่นยำ</div>
+  <div class="bar">
+    <select onchange="S.activeForm=this.value;save();render()">${S.forms.map(x=>`<option value="${x.id}" ${x===f?'selected':''}>${esc(x.title)}</option>`).join('')}</select>
+    <button onclick="newForm()">${SVG.plus} สร้างแบบฟอร์มใหม่</button>
+  </div>
+  
+  <label class="fld" style="background:var(--cd);border-color:var(--ln)">
+    <span>ชื่อแบบฟอร์ม</span>
+    <input value="${esc(f.title)}" oninput="curForm().title=this.value;save()">
+  </label>
+  
+  <h3 style="margin-top:16px">รายการช่องข้อมูล</h3>
+  ${f.fields.map((x,i)=>`
+    <div class="bar">
+      <input value="${esc(x.label)}" oninput="fl(${i},this.value)">
+      <button class="x" onclick="fdel(${i})">${SVG.close}</button>
+    </div>
+  `).join('')}
+  
+  <div class="bar" style="margin-top:14px">
+    <input id="nf" placeholder="ชื่อช่องใหม่ เช่น วันที่ยื่นคำขอ">
+    <button class="pri" onclick="fadd()">${SVG.plus} เพิ่มช่อง</button>
+  </div>
+  
+  ${S.forms.length>1?`<button class="dg" style="margin-top:20px" onclick="arm(this,delForm)">${SVG.trash} ลบแบบฟอร์มนี้</button>`:''}`;
+}
+
+function fl(i,v){const x=curForm().fields[i];x.label=v;if(x.key[0]==='x')x.syn=[v.trim().toLowerCase()];save()}
+function fdel(i){curForm().fields.splice(i,1);save();render()}
+function fadd(){const v=$('#nf').value.trim();if(!v)return toast('โปรดใส่ชื่อช่องก่อน');curForm().fields.push({key:'x'+rnd(5).toLowerCase(),label:v,syn:[v.toLowerCase()]});save();render()}
+function newForm(){const id='f'+rnd(4).toLowerCase();S.forms.push({id,title:'แบบฟอร์มใหม่',fields:[]});S.activeForm=id;save();render()}
+function delForm(){S.forms=S.forms.filter(x=>x.id!==S.activeForm);S.activeForm=S.forms[0].id;save();render()}
+
+function vD(){
+  const n=S.members.length, vf=S.members.filter(m=>m.dataVerifiedDate).length;
+  return `<h2>จัดการข้อมูลและการแชร์</h2>
+  <div class="stats">
+    <div>สมาชิกรวม<b>${n}</b>คน</div>
+    <div>ตรวจแล้ว<b>${vf}</b>คน</div>
+    <div>การเรียนรู้<b>${S.learn.n}</b>ครั้ง</div>
+  </div>
+  
+  <div class="it">
+    <b>ส่งออก / แชร์ข้อมูล</b>
+    <div class="mu" style="margin:4px 0 12px">ส่งออกข้อมูลในรูปแบบ JSON เพื่อนำไปใช้ต่อหรือสำรองข้อมูล</div>
+    <div class="bar">
+      <button class="pri" onclick="shareData()">${SVG.share} แชร์</button>
+      <button onclick="copyData()">${SVG.copy} คัดลอก</button>
+      <button onclick="dl()">${SVG.download} ดาวน์โหลด .json</button>
+    </div>
+  </div>
+  
+  <div class="it">
+    <b>นำเข้าไฟล์ JSON</b>
+    <div class="mu" style="margin:4px 0 12px">เลือกไฟล์ .json เพื่อรวมข้อมูลกับรายการปัจจุบัน</div>
+    <div class="bar">
+      <input type="file" accept=".json,.txt,application/json" onchange="impFile(this)">
+    </div>
+  </div>
+  
+  <div class="it" style="border-color:color-mix(in srgb, var(--er) 40%, transparent)">
+    <b style="color:var(--er)">ล้างข้อมูลทั้งหมด</b>
+    <div class="mu" style="margin:4px 0 12px">ลบข้อมูลสมาชิกและแบบฟอร์มทั้งหมดจากอุปกรณ์นี้</div>
+    <div class="bar">
+      <button class="dg" onclick="arm(this,clearAll)">${SVG.trash} ล้างข้อมูลทั้งหมดในเครื่อง</button>
+    </div>
+  </div>`;
+}
+
+/* App Initialization */
+render();
+</script>
+</body>
+</html>
